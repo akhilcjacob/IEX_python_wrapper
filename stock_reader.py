@@ -18,8 +18,13 @@ class StockReader():
         rundown["sector_perfomance"] = self.get_sector_performance()
         rundown["upcoming_ipos"] = self.get_upcoming_ipos()
         rundown["most_active"] = self.get_most_active()
-
+        return rundown
         
+    def get_snapshot (self, symbol):
+        qSnapshot_details=["logo",'price','stats']
+        snapshot = {}
+        for detail in qSnapshot_details:
+            snapshot['detail'] = self.get_stock_detail(symbol, detail)
     ## ========================================================= ##
     # Functions that return information about a specific company
     ## ========================================================= ##
@@ -152,7 +157,7 @@ class StockReader():
     def get_symbols (self):
         url = self.base_url + '/ref-data/symbols'
         return self.grab_data(url)    
-        
+
     # Returns the json formatted data of a url
     def grab_data(self, url):
         response = urllib.request.urlopen(url)
